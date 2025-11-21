@@ -11,7 +11,7 @@ from playwright.sync_api import sync_playwright
 from concurrent.futures import ThreadPoolExecutor
 
 class ImageDownloader:
-    def __init__(self, min_width=3840, min_height=2160, headless=True, max_workers=100, base_dir=None):
+    def __init__(self, min_width=3840, min_height=2160, headless=True, max_workers=100, base_dir=None, stop_flag=None):
         self.min_width = min_width
         self.min_height = min_height
         self.headless = headless
@@ -20,6 +20,7 @@ class ImageDownloader:
         self.image_urls = set()
         self.counter_lock = threading.Lock()
         self.counter = [1]
+        self.stop_flag = stop_flag  # 停止标志
 
     def sanitize_filename(self, name):
         """清理文件名中的非法字符"""
@@ -54,6 +55,10 @@ class ImageDownloader:
 
     def _process_image(self, img_url, save_dir):
         """单个图片处理逻辑"""
+        # 检查停止标志
+        if self.stop_flag and self.stop_flag.is_set():
+            return
+            
         if img_url.startswith("data:"): return
         if img_url.endswith('.svg') or img_url.endswith('.ico'): return
 

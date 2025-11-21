@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>苏富比抓取工具</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>
+                <span class="icon">🎨</span>
+                苏富比抓取工具
+            </h1>
+            <p class="subtitle">高效抓取拍卖列表与高清图片</p>
+        </header>
+
+        <div class="panels">
+            <!-- 列表抓取面板 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>📋 列表抓取</h2>
+                    <div class="status-indicator" id="scrape-status">
+                        <span class="dot"></span>
+                        <span class="text">就绪</span>
+                    </div>
+                </div>
+                
+                <div class="panel-body">
+                    <div class="input-group">
+                        <label for="url-input">拍卖列表URL</label>
+                        <input 
+                            type="text" 
+                            id="url-input" 
+                            placeholder="https://www.sothebys.com/buy/auction/..."
+                            value="https://www.sothebys.com/buy/auction/2024/china-5000-years"
+                        >
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="scrape-btn" class="btn btn-primary">
+                            <span class="btn-icon">▶</span>
+                            开始抓取
+                        </button>
+                        <button id="scrape-stop-btn" class="btn btn-danger" disabled>
+                            <span class="btn-icon">⏹</span>
+                            停止
+                        </button>
+                    </div>
+                    
+                    <div class="progress-info" id="scrape-progress"></div>
+                </div>
+            </div>
+
+            <!-- 图片下载面板 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>🖼️ 图片下载</h2>
+                    <div class="status-indicator" id="download-status">
+                        <span class="dot"></span>
+                        <span class="text">就绪</span>
+                    </div>
+                </div>
+                
+                <div class="panel-body">
+                    <div class="info-box">
+                        <p>📁 下载目录: <code>下载/</code></p>
+                        <p>📏 最小尺寸: <code>3840×2160</code></p>
+                        <p>📄 数据源: <code>urls.txt</code></p>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="download-btn" class="btn btn-primary">
+                            <span class="btn-icon">⬇</span>
+                            开始下载
+                        </button>
+                        <button id="download-stop-btn" class="btn btn-danger" disabled>
+                            <span class="btn-icon">⏹</span>
+                            停止
+                        </button>
+                    </div>
+                    
+                    <div class="progress-info" id="download-progress"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 日志面板 -->
+        <div class="log-panel">
+            <div class="log-header">
+                <h3>📝 实时日志</h3>
+                <button id="clear-log-btn" class="btn btn-small">清空</button>
+            </div>
+            <div class="log-content" id="log-content">
+                <div class="log-placeholder">等待任务启动...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
